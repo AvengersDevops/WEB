@@ -26,15 +26,15 @@ pipeline
 		}
 		stage("BUILD")
 		{
-			echo "BUILD STARTED"
 
 			steps
 			{
+				echo "BUILD STARTED"
 				sh "dotnet restore"
 				sh "dotnet build AvengersWeb/AvengersWeb.csproj"
+				echo "BUILD COMPLETED"
 			}
 
-			echo "BUILD COMPLETED"
 		}
 		stage("TEST")
 		{
