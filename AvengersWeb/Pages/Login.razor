@@ -1,0 +1,27 @@
+﻿@page "/Login"
+@using Task = System.Threading.Tasks.Task
+@using AvengersWeb.Repositories
+<PageTitle>Login</PageTitle>
+
+<h1>Login</h1>
+
+<div>
+    <input type="text" class="form-control" placeholder="Phone" @bind="email"/>
+    <input type="password" class="form-control" placeholder="Password" @bind="password"/>
+    <button class="btn btn-primary" @onclick="LoginClick">Login</button>
+</div>
+
+@code {
+    
+    String? email;
+    String? password;
+
+    private async Task LoginClick()
+    {
+        if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+        {
+            
+        }
+    }
+
+}
