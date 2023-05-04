@@ -36,4 +36,11 @@ public class UserTests
         User user3 = await userRepository.Delete(user2.Id.Value);
         Assert.That(user3.Id, Is.Not.Null);
     }
+
+    [Test]
+    public async Task Login()
+    {
+        User user = await userRepository.Login("Testemail", "Testpassword");
+        Assert.That(user.Id, Is.Not.Null);
+    }
 }
