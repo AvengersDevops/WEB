@@ -39,4 +39,14 @@ public class UserRepository : ApiRequest
         };
         return await Invoke<User>(body, $"{PATH}/delete");
     }
+
+    public async Task<User> Login(string email, string password)
+    {
+        var body = new Dictionary<string, dynamic>
+        {
+            {"email", email},
+            {"password", password}
+        };
+        return await Invoke<User>(body, $"{PATH}/login");
+    }
 }
