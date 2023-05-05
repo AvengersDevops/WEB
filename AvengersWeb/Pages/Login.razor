@@ -1,6 +1,7 @@
 ﻿@page "/Login"
 @using Task = System.Threading.Tasks.Task
 @using AvengersWeb.Repositories
+@inject NavigationManager NavigationManager
 <PageTitle>Login</PageTitle>
 
 <h1>Login</h1>
@@ -20,8 +21,14 @@
     {
         if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
         {
+            UserRepository UserRepository = new UserRepository(); 
+            var login = await UserRepository.Login(email, password);
+            
+            if (login != null)
+            {
+                NavigationManager.NavigateTo("/"); //Needs testing, path is correct?
+            }
             
         }
     }
-
 }
