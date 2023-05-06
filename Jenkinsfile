@@ -48,11 +48,11 @@ pipeline
 					sh "dotnet test --collect:'XPlat Code Coverage'"
 					sh "dotnet restore"
 					sh "dotnet test Tests.csproj"
+					
+					sh 'sudo chmod +x setup_k6.sh'
+					sh 'sudo ./setup_k6.sh'
+					sh "k6 run -e HOSTING=avengerstodo.azurewebsites.net k6Tests.js"
 				}
-				
-				sh 'sudo chmod +x setup_k6.sh'
-				sh 'sudo ./setup_k6.sh'
-				sh "k6 run -e HOSTING=avengerstodo.azurewebsites.net k6Tests.js"
 				
 				echo "TEST COMPLETED"
 			}
