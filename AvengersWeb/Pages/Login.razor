@@ -1,27 +1,34 @@
-﻿@page "/Login"
+﻿@page "/login"
 @using Task = System.Threading.Tasks.Task
 @using AvengersWeb.Repositories
+@inject NavigationManager NavigationManager
 <PageTitle>Login</PageTitle>
 
 <h1>Login</h1>
 
 <div>
-    <input type="text" class="form-control" placeholder="Phone" @bind="email"/>
-    <input type="password" class="form-control" placeholder="Password" @bind="password"/>
+    <input type="text" class="form-control" placeholder="Email" @bind="_email"/>
+    <input type="password" class="form-control" placeholder="Password" @bind="_password"/>
     <button class="btn btn-primary" @onclick="LoginClick">Login</button>
 </div>
 
 @code {
     
-    String? email;
-    String? password;
+    String? _email;
+    String? _password;
 
     private async Task LoginClick()
     {
-        if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+        if (!string.IsNullOrEmpty(_email) && !string.IsNullOrEmpty(_password))
         {
+            UserRepository UserRepository = new UserRepository(); 
+            var login = await UserRepository.Login(_email, _password);
+            
+            if (login != null)
+            {
+                NavigationManager.NavigateTo("/"); //Needs testing, path is correct?
+            }
             
         }
     }
-
 }
