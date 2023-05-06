@@ -50,6 +50,10 @@ pipeline
 					sh "dotnet test Tests.csproj"
 				}
 				
+				sh 'sudo chmod +x setup_k6.sh'
+				sh 'sudo ./setup_k6.sh'
+				sh "k6 run -e HOSTING=avengerstodo.azurewebsites.net k6Tests.js"
+				
 				echo "TEST COMPLETED"
 			}
 			post
