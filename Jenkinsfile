@@ -31,11 +31,9 @@ pipeline
 			{
 				echo "PREPARE STARTED"
 				
-				sh "export PATH=$PATH:/home/jenkins/.nvm/versions/node/v18.16.0/bin"
-
 				dir("Tests")
 				{
-					sh "npm install"
+					sh "/home/jenkins/.nvm/versions/node/v18.16.0/bin/npm install"
 					sh "export DISPLAY=:1"
 					sh "(npm run start&)"
 				}
