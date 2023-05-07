@@ -19,7 +19,7 @@ pipeline
 				dir("Tests")
 				{
 					sh "rm -rf TestResults"
-					sh "rmdir -r screenshots"
+					sh "rm -rf screenshots"
 				}
 
 				echo "CLEANUP COMPLETED"
