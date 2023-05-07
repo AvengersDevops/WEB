@@ -33,7 +33,8 @@ pipeline
 
 				dir("Tests")
 				{
-					/*sh "npm install"*/
+					sh "npm init"
+					sh "npm install"
 					sh "export DISPLAY=:1"
 					sh "npm install testcafe testcafe-reporter-xunit"
 					sh "(npm run start&)"
@@ -67,9 +68,9 @@ pipeline
 					sh "dotnet test --collect:'XPlat Code Coverage'"
 					sh "dotnet restore"
 					sh "dotnet test Tests.csproj"
+					sh "export HTTP_ENV=http://localhost:3000/"
+					sh "testcafe chrome TestCafeTests.js -r xunit:res.xml"
 				}
-				sh "export HTTP_ENV=http://localhost:3000/"
-				sh "testcafe chrome Tests/TestCafeTests.js -r xunit:res.xml"
 				
 				echo "TEST COMPLETED"
 			}
