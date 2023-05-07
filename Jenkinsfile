@@ -69,7 +69,7 @@ pipeline
 					sh "dotnet test Tests.csproj"
 				}
 				sh "export HTTP_ENV=http://localhost:3000/"
-				sh "node_modules/.bin/testcafe chrome Tests/TestCafeTests.js -r xunit:res.xml"
+				sh "testcafe chrome Tests/TestCafeTests.js -r xunit:res.xml"
 				
 				echo "TEST COMPLETED"
 			}
