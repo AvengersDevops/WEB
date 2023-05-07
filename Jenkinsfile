@@ -30,9 +30,7 @@ pipeline
 			steps
 			{
 				echo "PREPARE STARTED"
-				
-				sh "source /etc/environment"
-				
+								
 				dir("Tests")
 				{
 					sh "npm install"
