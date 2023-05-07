@@ -33,8 +33,7 @@ pipeline
 				
 				dir("Tests")
 				{
-					sh "export PATH=$PATH:/home/jenkins/.nvm/versions/node/v18.16.0/bin/"
-					sh "/home/jenkins/.nvm/versions/node/v18.16.0/bin/npm install"
+					sh "npm install"
 					sh "export DISPLAY=:1"
 					sh "(npm run start&)"
 				}
