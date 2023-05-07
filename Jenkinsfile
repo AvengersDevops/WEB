@@ -30,6 +30,8 @@ pipeline
 			steps
 			{
 				echo "PREPARE STARTED"
+				
+				sh "export PATH=$PATH:/home/jenkins/.nvm/versions/node/v18.16.0/bin"
 
 				dir("Tests")
 				{
