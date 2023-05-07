@@ -33,6 +33,8 @@ pipeline
 								
 				dir("Tests")
 				{
+					sh "alias node='/home/jenkins/.nvm/versions/node/v18.16.0/bin/node'"
+					sh "alias npm='/home/jenkins/.nvm/versions/node/v18.16.0/bin/npm'"
 					sh "npm install"
 					sh "export DISPLAY=:1"
 					sh "(npm run start&)"
