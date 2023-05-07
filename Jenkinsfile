@@ -33,10 +33,8 @@ pipeline
 
 				dir("Tests")
 				{
-					sh "npm init"
 					sh "npm install"
 					sh "export DISPLAY=:1"
-					sh "npm install testcafe testcafe-reporter-xunit"
 					sh "(npm run start&)"
 				}
 
