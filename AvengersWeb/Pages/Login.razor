@@ -1,6 +1,7 @@
 ﻿@page "/login"
-@using Task = System.Threading.Tasks.Task
 @using AvengersWeb.Repositories
+@using AvengersWeb.Models
+@using Task = System.Threading.Tasks.Task
 @inject NavigationManager NavigationManager
 <PageTitle>Login</PageTitle>
 
@@ -13,22 +14,28 @@
 </div>
 
 @code {
-    
-    String? _email;
-    String? _password;
+
+    string? _email;
+    string? _password;
 
     private async Task LoginClick()
     {
         if (!string.IsNullOrEmpty(_email) && !string.IsNullOrEmpty(_password))
         {
-            UserRepository UserRepository = new UserRepository(); 
-            var login = await UserRepository.Login(_email, _password);
-            
-            if (login != null)
+            UserRepository userRepository = new();
+            UserHandler.User = await userRepository.Login(_email, _password);
+            TaskRepository taskRepository = new();
+            try
             {
-                NavigationManager.NavigateTo("/"); //Needs testing, path is correct?
+                UserHandler.Tasks = await taskRepository.ReadAll((int)UserHandler.User.Id);
             }
-            
+            catch (Exception e)
+            {
+                if (!e.Message.Contains("No tasks found"))
+                    throw;
+            }
+            NavigationManager.NavigateTo("/normaltasks");
         }
     }
+
 }
