@@ -3,10 +3,7 @@ using AvengersWeb.Services;
 
 namespace AvengersWeb.Repositories;
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-public class UserRepository : ApiRequest
+public class UserRepository : ApiService
 {
     private const string PATH = "user";
 
@@ -14,7 +11,7 @@ public class UserRepository : ApiRequest
     {
         var body = new Dictionary<string, dynamic>
         {
-            {"id", id}
+            { "id", id }
         };
         return await Invoke<User>(body, $"{PATH}/read");
     }
@@ -35,7 +32,7 @@ public class UserRepository : ApiRequest
     {
         var body = new Dictionary<string, dynamic>
         {
-            {"id", id}
+            { "id", id }
         };
         return await Invoke<User>(body, $"{PATH}/delete");
     }
@@ -44,8 +41,8 @@ public class UserRepository : ApiRequest
     {
         var body = new Dictionary<string, dynamic>
         {
-            {"email", email},
-            {"password", password}
+            { "email", email },
+            { "password", password }
         };
         return await Invoke<User>(body, $"{PATH}/login");
     }

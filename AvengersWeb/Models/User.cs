@@ -4,9 +4,9 @@ namespace AvengersWeb.Models;
 
 public class User
 {
+    public string? Email;
     public int? Id;
     public string? Name;
-    public string? Email;
     public string? Password;
 
     public User(int? id = null, string? name = null, string? email = null, string? password = null)
@@ -20,21 +20,21 @@ public class User
     public static User FromJson(JToken json)
     {
         return new User(
-            id: json["id"]?.ToObject<int?>(),
-            name: json["name"]?.ToObject<string?>(),
-            email: json["email"]?.ToObject<string?>(),
-            password: json["password"]?.ToObject<string?>()
+            json["id"]?.ToObject<int?>(),
+            json["name"]?.ToObject<string?>(),
+            json["email"]?.ToObject<string?>(),
+            json["password"]?.ToObject<string?>()
         );
     }
 
-    public Dictionary<string,dynamic> ToJson()
+    public Dictionary<string, dynamic> ToJson()
     {
-        return new Dictionary<string,dynamic>
+        return new Dictionary<string, dynamic>
         {
-            {"id", Id!},
-            {"name", Name!},
-            {"email", Email!},
-            {"password", Password!}
+            { "id", Id! },
+            { "name", Name! },
+            { "email", Email! },
+            { "password", Password! }
         };
     }
 }

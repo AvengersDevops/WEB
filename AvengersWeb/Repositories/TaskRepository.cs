@@ -1,11 +1,9 @@
 ﻿using AvengersWeb.Services;
+using Task = AvengersWeb.Models.Task;
 
 namespace AvengersWeb.Repositories;
 
-using System.Collections.Generic;
-using Task = Models.Task;
-
-public class TaskRepository : ApiRequest
+public class TaskRepository : ApiService
 {
     private const string PATH = "task";
 
@@ -13,7 +11,7 @@ public class TaskRepository : ApiRequest
     {
         var body = new Dictionary<string, dynamic>
         {
-            {"id", id}
+            { "id", id }
         };
         return await Invoke<Task>(body, $"{PATH}/read");
     }
@@ -22,7 +20,7 @@ public class TaskRepository : ApiRequest
     {
         var body = new Dictionary<string, dynamic>
         {
-            {"userId", userId}
+            { "userId", userId }
         };
         return await Invoke<List<Task>>(body, $"{PATH}/readAll");
     }
@@ -43,7 +41,7 @@ public class TaskRepository : ApiRequest
     {
         var body = new Dictionary<string, dynamic>
         {
-            {"id", id}
+            { "id", id }
         };
         return await Invoke<Task>(body, $"{PATH}/delete");
     }

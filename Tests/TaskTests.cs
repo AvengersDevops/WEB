@@ -1,46 +1,48 @@
 ﻿using AvengersWeb.Repositories;
-using Task = AvengersWeb.Models.Task;
 
 namespace Tests;
 
 public class TaskTests
 {
-    TaskRepository taskRepository = new();
-    
+    private readonly TaskRepository taskRepository = new();
+
     [Test]
-    public async System.Threading.Tasks.Task Read()
+    public async Task Read()
     {
-        Task task = await taskRepository.Read(2);
+        var task = await taskRepository.Read(2);
         Assert.That(task.Id, Is.Not.Null);
     }
-    
+
     [Test]
-    public async System.Threading.Tasks.Task ReadAll()
+    public async Task ReadAll()
     {
-        List<Task> tasks = await taskRepository.ReadAll(1);
+        var tasks = await taskRepository.ReadAll(1);
         Assert.That(tasks, Is.Not.Empty);
     }
-    
+
     [Test]
-    public async System.Threading.Tasks.Task CreateDelete()
+    public async Task CreateDelete()
     {
-        Task task1 = await taskRepository.Create(new Task(userId: 1, title: "TestName", description: "TestDescription", dueDate: DateTime.Now, done: false));
+        var task1 = await taskRepository.Create(new AvengersWeb.Models.Task(userId: 1, title: "TestName",
+            description: "TestDescription", dueDate: DateTime.Now, done: false));
         Assert.That(task1.Id, Is.Not.Null);
-        
-        Task task2 = await taskRepository.Delete(task1.Id.Value);
+
+        var task2 = await taskRepository.Delete(task1.Id.Value);
         Assert.That(task2.Id, Is.Not.Null);
     }
-    
+
     [Test]
-    public async System.Threading.Tasks.Task Update()
+    public async Task Update()
     {
-        Task task1 = await taskRepository.Create(new Task(userId: 1, title: "TestName", description: "TestDescription", dueDate: DateTime.Now, done: false));
+        var task1 = await taskRepository.Create(new AvengersWeb.Models.Task(userId: 1, title: "TestName",
+            description: "TestDescription", dueDate: DateTime.Now, done: false));
         Assert.That(task1.Id, Is.Not.Null);
-        
-        Task task2 = await taskRepository.Update(new Task(id: task1.Id, userId: 1, title: "TestName2", description: "TestDescription2", dueDate: DateTime.Now, done: false));
+
+        var task2 = await taskRepository.Update(new AvengersWeb.Models.Task(task1.Id, 1, "TestName2",
+            "TestDescription2", DateTime.Now, false));
         Assert.That(task2.Id, Is.Not.Null);
-        
-        Task task3 = await taskRepository.Delete(task2.Id.Value);
+
+        var task3 = await taskRepository.Delete(task2.Id.Value);
         Assert.That(task3.Id, Is.Not.Null);
     }
 }

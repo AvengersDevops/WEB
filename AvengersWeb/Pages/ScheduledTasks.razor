@@ -1,0 +1,46 @@
+﻿@using AvengersWeb.Models
+@using AvengersWeb.Repositories
+@using Task = AvengersWeb.Models.Task
+
+@page "/scheduledtasks"
+<h3>Scheduled Tasks</h3>
+@if(UserHandler.Tasks.Count > 0)
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Mark as done</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Due</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var task in UserHandler.Tasks.Where(task => task.DueDate != DateTime.MinValue && (bool)!task.Done!))
+        {
+            <tr>
+                <td><button class="btn btn-primary" @onclick="() => MarkAsDone(task)">Mark as done</button></td>
+                <td>@task.Title</td>
+                <td>@task.Description</td>
+                <td>@task.DueDate</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No scheduled tasks found</p>
+}
+
+<BottomFooFoo></BottomFooFoo>
+@code {
+
+    async System.Threading.Tasks.Task MarkAsDone(Task task)
+    {
+        TaskRepository taskRepository = new();
+        task.Done = true;
+        await taskRepository.Update(task);
+        UserHandler.Tasks = await taskRepository.ReadAll((int)UserHandler.User.Id!);
+    }
+}
