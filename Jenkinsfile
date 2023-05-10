@@ -38,10 +38,9 @@ pipeline
 					sh "npm install"
 					sh "npm install junit"
 					
-					# Install testcafe and Video prerequisites
 					sh "npm i -g testcafe"
 					sh "npm install --save @ffmpeg-installer/ffmpeg"
-					# Adds the testcafe reporter
+
 					sh "npm i testcafe-reporter-jenkins"
 					
 					sh "export DISPLAY=:1"
@@ -99,7 +98,6 @@ pipeline
 					[[failUnhealthy: false, thresholdTarget: 'Conditional', unhealthyThreshold: 80.0, unstableThreshold: 50.0]])], checksName: '',
 						sourceFileResolver: sourceFiles('NEVER_STORE')
 					
-					# Publish the report via junit
 					junit keepLongStdio: true,
 						testDataPublishers: [[$class: 'TestCafePublisher']],
 						testResults: 'report.xml'
