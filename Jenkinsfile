@@ -82,7 +82,7 @@ pipeline
 					sh "dotnet test --collect:'XPlat Code Coverage'"
 					sh "dotnet restore"
 					sh "dotnet test Tests.csproj"
-  					sh "export HTTP_ENV='http://localhost:5070' && testcafe chrome TestCafeTests.js -r jenkins:report.xml"
+  					sh "export HTTP_ENV='http://localhost:5070' && testcafe chrome:headless TestCafeTests.js -r jenkins:report.xml"
 				}
 				
 				sh "tmux kill-ses -t avengersweb"
