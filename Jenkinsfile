@@ -91,7 +91,7 @@ pipeline
 						sourceFileResolver: sourceFiles('NEVER_STORE')
 					
 					junit keepLongStdio: true,
-						testResults: 'report.xml'
+						testResults: 'Tests/report.xml'
 				}
 			}
 		}
