@@ -32,7 +32,7 @@ pipeline
 				echo "PREPARE STARTED"
 												
 				dir("Tests")
-				{				
+				{
 					sh "npm install"
 					
 					sh "export DISPLAY=:1"
