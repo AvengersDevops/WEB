@@ -1,6 +1,5 @@
 {
   "dependencies": {
     "testcafe": "1.18.6",
-    "testcafe-reporter-xunit": "^2.2.2"
   }
 }
