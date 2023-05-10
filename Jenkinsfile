@@ -91,7 +91,6 @@ pipeline
 						sourceFileResolver: sourceFiles('NEVER_STORE')
 					
 					junit keepLongStdio: true,
-						testDataPublishers: [[$class: 'TestCafePublisher']],
 						testResults: 'report.xml'
 				}
 			}
