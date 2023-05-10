@@ -33,7 +33,17 @@ pipeline
 												
 				dir("Tests")
 				{
+					sh "curl -qL https://www.npmjs.com/install.sh | sh"
+					
 					sh "npm install"
+					sh "npm install junit"
+					
+					# Install testcafe and Video prerequisites
+					sh "npm i -g testcafe"
+					sh "npm install --save @ffmpeg-installer/ffmpeg"
+					# Adds the testcafe reporter
+					sh "npm i testcafe-reporter-jenkins"
+					
 					sh "export DISPLAY=:1"
 					sh "(npm run start&)"
 				}
@@ -72,7 +82,7 @@ pipeline
 					sh "dotnet test --collect:'XPlat Code Coverage'"
 					sh "dotnet restore"
 					sh "dotnet test Tests.csproj"
-  					sh "export HTTP_ENV='http://localhost:5070' && ./node_modules/.bin/testcafe chrome:headless TestCafeTests.js -r xunit:res.xml"
+  					sh "export HTTP_ENV='http://localhost:5070' && testcafe chrome test.js -r jenkins:report.xml"
 				}
 				
 				sh "tmux kill-ses -t avengersweb"
@@ -88,7 +98,11 @@ pipeline
 					publishCoverage adapters: [istanbulCoberturaAdapter(path: 'Tests/TestResults/*/coverage.cobertura.xml', thresholds:
 					[[failUnhealthy: false, thresholdTarget: 'Conditional', unhealthyThreshold: 80.0, unstableThreshold: 50.0]])], checksName: '',
 						sourceFileResolver: sourceFiles('NEVER_STORE')
-					sh "junit '**/res.xml'"
+					
+					# Publish the report via junit
+					junit keepLongStdio: true,
+						testDataPublishers: [[$class: 'TestCafePublisher']],
+						testResults: 'res.xml'
 				}
 			}
 		}
