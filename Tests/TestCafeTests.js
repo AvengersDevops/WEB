@@ -1,6 +1,6 @@
 import {Selector} from 'testcafe';
 
-fixture('Getting Started').page(process.env.HTTP_ENV)
+fixture('Getting Started').page('http://localhost:5070')
 
 test('Counter test', async t => {
     await t
