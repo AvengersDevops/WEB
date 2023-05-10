@@ -59,6 +59,12 @@ pipeline
 			steps
 			{
 				echo "TEST STARTED"
+				
+				dir("AvengersWeb")
+				{
+					sh "tmux new -s avengersweb -d 'dotnet run --release'"
+					echo "STARTED TMUX SESSION"
+				}
 
 				dir("Tests")
 				{
@@ -69,6 +75,9 @@ pipeline
 					sh "export HTTP_ENV=http://localhost:3000/"
 					sh "./node_modules/.bin/testcafe chrome:headless TestCafeTests.js -r xunit:res.xml"
 				}
+				
+				sh "tmux kill-ses -t avengersweb"
+				echo "KILLED TMUX SESSION"
 				
 				echo "TEST COMPLETED"
 			}
