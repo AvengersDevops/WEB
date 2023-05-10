@@ -102,7 +102,7 @@ pipeline
 					# Publish the report via junit
 					junit keepLongStdio: true,
 						testDataPublishers: [[$class: 'TestCafePublisher']],
-						testResults: 'res.xml'
+						testResults: 'report.xml'
 				}
 			}
 		}
