@@ -91,7 +91,8 @@ pipeline
 						sourceFileResolver: sourceFiles('NEVER_STORE')
 					
 					junit keepLongStdio: true,
-						testResults: 'Tests/report.xml'
+						testResults: 'Tests/report.xml', 
+						skipPublishingChecks: true
 					archiveArtifacts "Tests/report.xml"
 				}
 			}
