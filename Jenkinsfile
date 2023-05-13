@@ -110,6 +110,7 @@ pipeline
 				{	
 					junit keepLongStdio: true,
 						testResults: 'Tests/report.xml'
+					archiveArtifacts "Tests/report.xml"
 				}
 			}
 		}
