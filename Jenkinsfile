@@ -60,12 +60,6 @@ pipeline
 			steps
 			{
 				echo "TEST STARTED"
-				
-				dir("AvengersWeb")
-				{
-					sh "tmux new -s avengersweb -d 'dotnet run --release'"
-					echo "STARTED TMUX SESSION"
-				}
 
 				dir("Tests")
 				{
@@ -73,11 +67,7 @@ pipeline
 					sh "dotnet test --collect:'XPlat Code Coverage'"
 					sh "dotnet restore"
 					sh "dotnet test Tests.csproj"
-  					sh "export HTTP_ENV='http://localhost:5070' && ./node_modules/.bin/testcafe chrome:headless TestCafeTests.js -r xunit:report.xml"
 				}
-				
-				sh "tmux kill-ses -t avengersweb"
-				echo "KILLED TMUX SESSION"
 				
 				echo "TEST COMPLETED"
 			}
@@ -89,9 +79,6 @@ pipeline
 					publishCoverage adapters: [istanbulCoberturaAdapter(path: 'Tests/TestResults/*/coverage.cobertura.xml', thresholds:
 					[[failUnhealthy: false, thresholdTarget: 'Conditional', unhealthyThreshold: 80.0, unstableThreshold: 50.0]])], checksName: '',
 						sourceFileResolver: sourceFiles('NEVER_STORE')
-					
-					junit keepLongStdio: true,
-						testResults: 'Tests/report.xml'
 				}
 			}
 		}
@@ -99,9 +86,32 @@ pipeline
 		{
 			steps
 			{
-			echo "DEPLOYMENT STARTED"
+				echo "DEPLOYMENT STARTED"
 			
-			echo "DEPLOYMENT COMPLETED"
+				dir("AvengersWeb")
+				{
+					sh "tmux new -s avengersweb -d 'dotnet run --release'"
+					echo "STARTED TMUX SESSION"
+				}
+				
+				dir("Tests")
+				{
+  					sh "export HTTP_ENV='http://localhost:5070' && ./node_modules/.bin/testcafe chrome:headless TestCafeTests.js -r xunit:report.xml"
+				}
+				
+				sh "tmux kill-ses -t avengersweb"
+				echo "KILLED TMUX SESSION"
+				
+				echo "DEPLOYMENT COMPLETED"
+			}
+			post
+			{
+				success
+				{	
+					junit keepLongStdio: true,
+						testResults: 'Tests/report.xml'
+					archiveArtifacts "Tests/report.xml"
+				}
 			}
 		}
 	}
