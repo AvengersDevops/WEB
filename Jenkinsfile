@@ -49,8 +49,7 @@ pipeline
 			{
 				echo "BUILD STARTED"
 				
-				sh "dotnet restore"
-				sh "dotnet build AvengersWeb/AvengersWeb.csproj"
+				sh "docker build . -t avengersweb"
 				
 				echo "BUILD COMPLETED"
 			}
@@ -88,6 +87,7 @@ pipeline
 			{
 				echo "DEPLOYMENT STARTED"
 			
+			/*this should be replaced with a docker test environment*/
 				dir("AvengersWeb")
 				{
 					sh "tmux new -s avengersweb -d 'dotnet run --release'"
@@ -101,6 +101,9 @@ pipeline
 				
 				sh "tmux kill-ses -t avengersweb"
 				echo "KILLED TMUX SESSION"
+				
+				sh "docker-compose down"
+				sh "docker-compose up -d"
 				
 				echo "DEPLOYMENT COMPLETED"
 			}

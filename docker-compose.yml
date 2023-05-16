@@ -1,0 +1,12 @@
+version: "2"
+services:
+  web:
+    image: avengersweb
+    networks:
+      - wheel
+    ports:
+      - "0.0.0.0:81:80"
+networks:
+  wheel:
+    driver: bridge
+
