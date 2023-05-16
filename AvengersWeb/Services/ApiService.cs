@@ -8,7 +8,7 @@ namespace AvengersWeb.Services;
 
 public class ApiService
 {
-    private const string URL = "https://avengerstodo.azurewebsites.net/";
+    private const string URL = "https://avengerstodo2.azurewebsites.net/";
     private readonly HttpClient _client = new();
 
     public async Task<T> Invoke<T>(Dictionary<string, dynamic> body, string path)
