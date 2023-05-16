@@ -96,7 +96,7 @@ pipeline
 				
 				dir("Tests")
 				{
-  					sh "export HTTP_ENV='http://localhost:5070' && ./node_modules/.bin/testcafe edge:headless TestCafeTests.js -r xunit:report.xml"
+  					sh "export HTTP_ENV='http://localhost:5070' && ./node_modules/.bin/testcafe firefox:headless TestCafeTests.js -r xunit:report.xml"
 				}
 				
 				sh "tmux kill-ses -t avengersweb"
