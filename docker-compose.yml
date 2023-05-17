@@ -10,7 +10,7 @@ services:
     image: testcafe/testcafe
     volumes:
       - ./Tests:/Tests
-    command: "edge tests"
+    command: "edge tests --reporter junit:/reports/report.xml"
 networks:
   wheel:
     driver: bridge
