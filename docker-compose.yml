@@ -6,6 +6,11 @@ services:
       - wheel
     ports:
       - "0.0.0.0:81:80"
+  testcafe:
+    image: testcafe/testcafe
+    volumes:
+      - ./Tests:/Tests
+    command: "edge tests"
 networks:
   wheel:
     driver: bridge
