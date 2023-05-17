@@ -92,7 +92,7 @@ pipeline
 				
 				sh "docker-compose ps"
 				
-				sh "docker-compose exec testcafe bash -c 'cd /Tests && export HTTP_ENV="http://localhost:5070" && ./node_modules/.bin/testcafe edge:headless TestCafeTests.js -r xunit:report.xml'"
+				sh "docker-compose exec testcafe bash -c 'cd /Tests && export HTTP_ENV="http://localhost:5070" && ./node_modules/.bin/testcafe edge:headless TestCafeTests.js -r junit:report.xml'"
 				
 				echo "DEPLOYMENT COMPLETED"
 			}
@@ -100,6 +100,8 @@ pipeline
 			{
 				success
 				{	
+					sh 'docker cp <container_id>:/reports/report.xml report.xml'
+					
 					junit keepLongStdio: true,
 						testResults: 'Tests/report.xml',
 						skipPublishingChecks: true
