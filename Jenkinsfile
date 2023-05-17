@@ -100,7 +100,7 @@ pipeline
 			{
 				success
 				{	
-					sh 'docker cp <container_id>:/reports/report.xml report.xml'
+					sh 'docker exec testcafe cp report.xml Tests/report.xml'
 					
 					junit keepLongStdio: true,
 						testResults: 'Tests/report.xml',
