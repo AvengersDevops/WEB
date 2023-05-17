@@ -1,12 +1,13 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY AvengersWeb.csproj .
-RUN dotnet restore AvengersWeb.csproj
+COPY ["AvengersWeb/AvengersWeb.csproj", "AvengersWeb/"]
+RUN dotnet restore "AvengersWeb/AvengersWeb.csproj"
 COPY . .
-RUN dotnet build AvengersWeb.csproj -c Release -o /app/build
+WORKDIR "/src/AvengersWeb"
+RUN dotnet build "AvengersWeb.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish AvengersWeb.csproj -c Release -o /app/publish
+RUN dotnet publish "AvengersWeb.csproj" -c Release -o /app/publish
 
 FROM nginx:alpine AS final
 WORKDIR /usr/share/nginx/html
