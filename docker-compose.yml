@@ -5,7 +5,7 @@ services:
     networks:
       - wheel
     ports:
-      - "0.0.0.0:81:80"
+      - "81:80"
   testcafe:
     image: testcafe/testcafe
     volumes:
