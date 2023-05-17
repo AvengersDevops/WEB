@@ -86,24 +86,13 @@ pipeline
 			steps
 			{
 				echo "DEPLOYMENT STARTED"
-			
-			/*this should be replaced with a docker test environment*/
-				dir("AvengersWeb")
-				{
-					sh "tmux new -s avengersweb -d 'dotnet run --release'"
-					echo "STARTED TMUX SESSION"
-				}
-				
-				dir("Tests")
-				{
-  					sh "export HTTP_ENV='http://localhost:5070' && ./node_modules/.bin/testcafe firefox:headless TestCafeTests.js -r xunit:report.xml"
-				}
-				
-				sh "tmux kill-ses -t avengersweb"
-				echo "KILLED TMUX SESSION"
 				
 				sh "docker-compose down"
 				sh "docker-compose up -d"
+				
+				sh "docker-compose ps"
+				
+				sh "docker-compose exec testcafe bash -c 'cd /Tests && export HTTP_ENV="http://localhost:5070" && ./node_modules/.bin/testcafe edge:headless TestCafeTests.js -r junit:report.xml'"
 				
 				echo "DEPLOYMENT COMPLETED"
 			}
@@ -111,6 +100,8 @@ pipeline
 			{
 				success
 				{	
+					sh 'docker exec testcafe cp report.xml Tests/report.xml'
+					
 					junit keepLongStdio: true,
 						testResults: 'Tests/report.xml',
 						skipPublishingChecks: true
