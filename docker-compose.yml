@@ -13,7 +13,7 @@ services:
       - /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests
     environment:
       - HTTP_ENV=http://128.140.9.68:81
-    command: firefox:headless Tests/TestCafeTests.js -s -r xunit:Tests/report.xml
+    command: firefox:headless Tests/TestCafeTests.js -r xunit:Tests/report.xml
     networks:
       - wheel
 
