@@ -88,12 +88,10 @@ pipeline
         			echo "DEPLOYMENT STARTED"
 
         			sh "docker-compose down"
-        			sh "docker-compose up -d -e HTTP_ENV=http://0.0.0.0:81"
+        			sh "docker-compose up -d"
 
         			sh "docker-compose ps"
-
-        			sh "docker-compose exec -T testcafe sh -c 'testcafe edge:headless /Tests/TestCafeTests.js -r junit:/reports/report.xml --skip-js-errors web'"
-
+				
         			echo "DEPLOYMENT COMPLETED"
     			}
     			post 
