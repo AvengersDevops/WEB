@@ -10,6 +10,8 @@ services:
     image: testcafe/testcafe
     volumes:
       - ./Tests:/Tests
+    environment:
+      - HTTP_ENV="http://128.140.9.68:81"
     command: "testcafe edge:headless /Tests/TestCafeTests.js -r junit:/reports/report.xml --skip-js-errors web"
     mem_limit: 200m
     links:
