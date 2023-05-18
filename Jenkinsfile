@@ -92,7 +92,7 @@ pipeline
 				
 				sh "docker-compose ps"
 				
-				sh "docker-compose exec -T testcafe sh -c 'cd /Tests && export HTTP_ENV=\"http://128.140.9.68:81\" && ./node_modules/.bin/testcafe edge:headless TestCafeTests.js -r junit:report.xml'"
+				sh "docker-compose exec -T testcafe sh -c \"cd /Tests && export HTTP_ENV=\"http://128.140.9.68:81\" && ./node_modules/.bin/testcafe edge:headless TestCafeTests.js -r junit:report.xml\""
 				
 				echo "DEPLOYMENT COMPLETED"
 			}
