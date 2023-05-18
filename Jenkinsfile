@@ -89,8 +89,6 @@ pipeline
 
         			sh "docker-compose down"
         			sh "docker-compose up -d"
-
-        			sh "docker-compose ps"
 				
         			echo "DEPLOYMENT COMPLETED"
     			}
@@ -100,7 +98,6 @@ pipeline
 				{
             				script 
 					{
-                				def testCafeContainer = sh(returnStdout: true, script: "docker-compose ps -q testcafe").trim()
             					junit keepLongStdio: true, testResults: 'Tests/report.xml', skipPublishingChecks: true
             					archiveArtifacts "Tests/report.xml"
             				}
