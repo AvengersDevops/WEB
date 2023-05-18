@@ -101,11 +101,13 @@ pipeline
             				script 
 					{
                 				def testCafeContainer = sh(returnStdout: true, script: "docker-compose ps -q testcafe").trim()
-                
-                				sh "docker exec $testCafeContainer cp report.xml Tests/report.xml"
-                
-                				junit keepLongStdio: true, testResults: 'Tests/report.xml', skipPublishingChecks: true
-                				archiveArtifacts "Tests/report.xml"
+
+            					sh "docker exec $testCafeContainer cp /reports/report.xml Tests/report.xml"
+
+            					junit keepLongStdio: true,
+                					testResults: 'Tests/report.xml',
+                					skipPublishingChecks: true
+            					archiveArtifacts "Tests/report.xml"
             				}
         			}
     			}
