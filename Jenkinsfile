@@ -47,6 +47,8 @@ pipeline
 				{
 					sh "dotnet add package coverlet.collector"
 					sh "dotnet test --collect:'XPlat Code Coverage'"
+					sh "dotnet restore"
+					sh "dotnet test Tests.csproj"
 				}
 				
 				echo "TEST COMPLETED"
