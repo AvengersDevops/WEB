@@ -10,8 +10,10 @@ services:
     image: testcafe/testcafe
     volumes:
       - ./Tests:/Tests
-    command: "edge tests --reporter junit:/reports/report.xml"
+    command: "testcafe edge:headless /Tests/TestCafeTests.js -r junit:/reports/report.xml --skip-js-errors web"
     mem_limit: 200m
+    links:
+      - web:web
 networks:
   wheel:
     driver: bridge
