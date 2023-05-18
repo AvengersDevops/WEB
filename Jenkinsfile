@@ -20,6 +20,7 @@ pipeline
 				{
 					sh "rm -rf TestResults"
 					sh "rm -rf screenshots"
+					sh "rm report.xml"
 				}
 
 				echo "CLEANUP COMPLETED"
