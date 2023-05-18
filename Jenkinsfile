@@ -90,7 +90,7 @@ pipeline
         			sh "docker-compose down"
         			sh "docker-compose up -d"
 				  
-    				sh "docker run -e HTTP_ENV=\"http://128.140.9.68:81\" -v ${PWD}/Tests:/Tests -it testcafe/testcafe firefox:headless Tests/TestCafeTests.js -s -r xunit:Tests/report.xml"
+    				sh "docker run -e HTTP_ENV=\"http://128.140.9.68:81\" -v ${PWD}/Tests:/Tests -t testcafe/testcafe firefox:headless Tests/TestCafeTests.js -s -r xunit:Tests/report.xml"
 				
         			echo "DEPLOYMENT COMPLETED"
     			}
