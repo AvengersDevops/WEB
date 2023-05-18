@@ -102,9 +102,9 @@ pipeline
 					{
                 				def testCafeContainer = sh(returnStdout: true, script: "docker-compose ps -q testcafe").trim()
 
-            sh "docker exec $testCafeContainer ls -la /"
+            sh "docker exec $testCafeContainer ls -la /Tests"
 
-            sh "docker exec $testCafeContainer cp /path/to/report.xml Tests/report.xml"
+            sh "docker exec $testCafeContainer cp /Tests/path/to/report.xml Tests/report.xml"
 
             junit keepLongStdio: true,
                 testResults: 'Tests/report.xml',
