@@ -86,17 +86,14 @@ pipeline
 		{
     			steps
 			{
-				script
-				{
-					echo "DEPLOYMENT STARTED"
+		
+				echo "DEPLOYMENT STARTED"
 
-        				sh "docker-compose down"
-    					sh "docker-compose up --exit-code-from testcafe"
-				     	def testCafeContainer = sh(returnStdout: true, script: "docker-compose ps -q testcafe").trim()
-					sh "docker cp $testCafeContainer:/Tests/report.xml Tests/report.xml"
+        			sh "docker-compose down"
+    				sh "docker-compose up -d"
+				sh "docker run -e HTTP_ENV=http://128.140.9.68:81 -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests testcafe/testcafe firefox:headless Tests/TestCafeTests.js -s -r xunit:Tests/report.xml"
 					
-        				echo "DEPLOYMENT COMPLETED"
-				}			
+        			echo "DEPLOYMENT COMPLETED"		
     			}
     			post 
 			{
