@@ -6,6 +6,17 @@ services:
       - wheel
     ports:
       - "81:80"
+      
+  testcafe:
+    image: testcafe/testcafe
+    volumes:
+      - /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests
+    environment:
+      - HTTP_ENV=http://128.140.9.68:81
+    command: firefox:headless Tests/TestCafeTests.js -s -r xunit:Tests/report.xml
+    networks:
+      - wheel
+
 networks:
   wheel:
     driver: bridge
