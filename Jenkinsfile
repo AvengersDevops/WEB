@@ -86,12 +86,17 @@ pipeline
 		{
     			steps
 			{
-        			echo "DEPLOYMENT STARTED"
+				script
+				{
+					echo "DEPLOYMENT STARTED"
 
-        			sh "docker-compose down"
-        			sh "docker-compose up -d"
-				  				
-        			echo "DEPLOYMENT COMPLETED"
+        				sh "docker-compose down"
+    					sh "docker-compose up -d --exit-code-from testcafe"
+				     	def testCafeContainer = sh(returnStdout: true, script: "docker-compose ps -q testcafe").trim()
+					sh "docker cp $testCafeContainer:/Tests/report.xml Tests/report.xml"
+					
+        				echo "DEPLOYMENT COMPLETED"
+				}			
     			}
     			post 
 			{
