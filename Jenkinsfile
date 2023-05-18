@@ -18,29 +18,11 @@ pipeline
 
 				dir("Tests")
 				{
-					sh "rm -rf TestResults"
-					sh "rm -rf screenshots"
-					sh "rm -rf report.xml"
+					sh "rm -rf TestResults/"
+					sh "rm -rf screenshots/"
 				}
 
 				echo "CLEANUP COMPLETED"
-			}
-		}
-		stage("PREPARE")
-		{
-			steps
-			{
-				echo "PREPARE STARTED"
-												
-				dir("Tests")
-				{
-					sh "npm install"
-					
-					sh "export DISPLAY=:1"
-					sh "(npm run start&)"
-				}
-
-				echo "PREPARE COMPLETED"
 			}
 		}
 		stage("BUILD")
@@ -65,8 +47,6 @@ pipeline
 				{
 					sh "dotnet add package coverlet.collector"
 					sh "dotnet test --collect:'XPlat Code Coverage'"
-					sh "dotnet restore"
-					sh "dotnet test Tests.csproj"
 				}
 				
 				echo "TEST COMPLETED"
