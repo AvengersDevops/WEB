@@ -83,31 +83,31 @@ pipeline
 		}
 		stage("DEPLOY")
 		{
-			steps
+    			steps
 			{
-				echo "DEPLOYMENT STARTED"
-				
-				sh "docker-compose down"
-				sh "docker-compose up -d"
-				
-				sh "docker-compose ps"
-				
-				sh "docker-compose exec -T testcafe sh -c 'cd /Tests && export HTTP_ENV=\"http://128.140.9.68:81\" && ./node_modules/.bin/testcafe edge:headless TestCafeTests.js -r junit:report.xml'"
-				
-				echo "DEPLOYMENT COMPLETED"
-			}
-			post
+        			echo "DEPLOYMENT STARTED"
+
+        			sh "docker-compose down"
+        			sh "docker-compose up -d -e HTTP_ENV=http://0.0.0.0:81"
+
+        			sh "docker-compose ps"
+
+        			sh "docker-compose exec -T testcafe sh -c 'testcafe edge:headless /Tests/TestCafeTests.js -r junit:/reports/report.xml --skip-js-errors web'"
+
+        			echo "DEPLOYMENT COMPLETED"
+    			}
+    			post 
 			{
-				success
-				{	
-					sh 'docker exec testcafe cp report.xml Tests/report.xml'
-					
-					junit keepLongStdio: true,
-						testResults: 'Tests/report.xml',
-						skipPublishingChecks: true
-					archiveArtifacts "Tests/report.xml"
-				}
-			}
+        			success 
+				{
+            				sh 'docker exec testcafe cp report.xml Tests/report.xml'
+
+            				junit keepLongStdio: true,
+                    			testResults: 'Tests/report.xml',
+                    			skipPublishingChecks: true
+            				archiveArtifacts "Tests/report.xml"
+        			}
+    			}
 		}
 	}
 }
