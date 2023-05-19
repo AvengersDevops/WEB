@@ -71,15 +71,14 @@ pipeline
 				echo "DEPLOYMENT STARTED"
 
         			sh "docker-compose down"
-    				sh "docker-compose up -d"
-				sh "docker run --name avengers-testcafe -e HTTP_ENV=http://128.140.9.68:81 -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests testcafe/testcafe firefox:headless Tests/TestCafeTests.js -s -r xunit:Tests/report.xml"
-					
-					script
-					{
-					    	sh "docker cp avengers-testcafe:/Tests/report.xml Tests/report.xml"
-					}
-					
-        			echo "DEPLOYMENT COMPLETED"		
+				sh "docker-compose up -d"
+
+				sh "docker run --name avengers-testcafe -e HTTP_ENV=http://128.140.9.68:81 -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests -v avengers-reports:/Reports testcafe/testcafe firefox:headless Tests/TestCafeTests.js -s -r xunit:/Reports/report.xml"
+
+				sh "docker run --rm -v avengers-reports:/source -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/target alpine cp /source/report.xml /target/report.xml"
+
+				echo "DEPLOYMENT COMPLETED"
+
     			}
     			post 
 			{
