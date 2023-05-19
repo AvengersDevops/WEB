@@ -72,7 +72,14 @@ pipeline
 
         			sh "docker-compose down"
     				sh "docker-compose up -d"
-				sh "docker run -e HTTP_ENV=http://128.140.9.68:81 -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests testcafe/testcafe firefox:headless Tests/TestCafeTests.js -s -r xunit:Tests/report.xml"
+				    sh "docker run -e HTTP_ENV=http://128.140.9.68:81 -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests testcafe/testcafe firefox:headless Tests/TestCafeTests.js -s -r xunit:Tests/report.xml"
+					
+					script
+					{
+					    /*get testcafe docker to copy the report from its filesystem to host*/
+					    def containerId = sh(returnStdout: true, script: "docker ps -aqf \"name=testcafe\"").trim()
+					    sh "docker cp ${containerId}:/Tests/report.xml Tests/report.xml"
+					}
 					
         			echo "DEPLOYMENT COMPLETED"		
     			}
