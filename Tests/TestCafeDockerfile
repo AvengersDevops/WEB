@@ -8,4 +8,4 @@ WORKDIR /Tests
 
 COPY Tests/TestCafeTests.js .
 
-CMD ["testcafe", "firefox:headless", "Tests/TestCafeTests.js", "-s", "--reporter", "xunit:Tests/report.xml"]
+CMD ["firefox:headless", "Tests/TestCafeTests.js", "-s", "--reporter", "xunit:Tests/report.xml"]
