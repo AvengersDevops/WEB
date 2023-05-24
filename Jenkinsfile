@@ -81,6 +81,7 @@ pipeline
 				echo "DEPLOYMENT COMPLETED"
 
     			}
+			/* i give up
     			post 
 			{
         			success 
@@ -89,7 +90,7 @@ pipeline
             				junit keepLongStdio: true, testResults: 'Tests/report.xml', skipPublishingChecks: true
             				archiveArtifacts 'Tests/report.xml'
         			}
-    			}
+    			}*/
 		}
 	}
 }
