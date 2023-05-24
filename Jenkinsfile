@@ -93,8 +93,6 @@ pipeline
 			{
         			success 
 				{
-            			
-            				junit keepLongStdio: true, testResults: "PlaywrightTests/TestResults/report.xml", skipPublishingChecks: true
             				archiveArtifacts "PlaywrightTests/TestResults/report.xml"
         			}
     			}
