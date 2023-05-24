@@ -1,7 +1,5 @@
 FROM testcafe/testcafe
 USER root
 RUN npm install -g testcafe-reporter-xunit
-CMD ["ls"]
 WORKDIR /Tests
-CMD ["ls"]
-CMD ["firefox:headless", "TestCafeTests.js", "-s", "--reporter", "xunit:report.xml"]
+CMD ["ls && firefox:headless TestCafeTests.js -s --reporter xunit:report.xml"]
