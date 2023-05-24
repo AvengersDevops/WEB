@@ -77,12 +77,13 @@ pipeline
 		
 				echo "DEPLOYMENT STARTED"
 
-        		sh "docker-compose down"
+        			sh "docker-compose down"
 				sh "docker-compose up -d"
 				
 				dir("PlaywrightTests")
 				{
-				    sh "export URL=http://128.140.9.68:81 && dotnet test --test-adapter-path:. --logger:\"nunit;LogFilePath=TestResults/report.xml\""
+					sh "pwsh bin/Debug/net7.0/playwright.ps1 install"
+				    	sh "export URL=http://128.140.9.68:81 && dotnet test --test-adapter-path:. --logger:\"nunit;LogFilePath=TestResults/report.xml\""
 				}
 
 				echo "DEPLOYMENT COMPLETED"
