@@ -74,8 +74,9 @@ pipeline
 
         			sh "docker-compose down"
 				sh "docker-compose up -d"
-
-				sh "docker run --rm -e HTTP_ENV=http://128.140.9.68:81 -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests testcafe/testcafe firefox:headless Tests/TestCafeTests.js -s --reporter xunit:Tests/report.xml"
+				
+				sh "docker build -f Tests/TestCafeDockerfile -t testcafe-image ."
+				sh "docker run --rm -e HTTP_ENV=http://128.140.9.68:81 -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests testcafe-image"
 
 				echo "DEPLOYMENT COMPLETED"
 
