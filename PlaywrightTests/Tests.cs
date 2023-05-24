@@ -30,7 +30,7 @@ public class Tests
     [SetUp]
     public async Task SetUp()
     {
-        await _page.GotoAsync("http://128.140.9.68:81");
+        await _page.GotoAsync(Environment.GetEnvironmentVariable("URL")!);
     }
 
     [Test]
