@@ -24,8 +24,10 @@ pipeline
 				
 				dir("PlaywrightTests")
 				{
-	                sh "rm -rf TestResults/"
+	                		sh "rm -rf TestResults/"
 				}
+				
+				sh "chmod -R 777 PlaywrightTests/"
 				
 				echo "CLEANUP COMPLETED"
 			}
