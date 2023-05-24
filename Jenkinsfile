@@ -20,11 +20,13 @@ pipeline
 				{
 					sh "rm -rf TestResults/"
 					sh "rm -rf screenshots/"
-					sh "rm -rf report.xml"
 				}
 				
-				sh "chmod -R 777 Tests/"
-
+				dir("PlaywrightTests")
+				{
+	                sh "rm -rf TestResults/"
+				}
+				
 				echo "CLEANUP COMPLETED"
 			}
 		}
@@ -72,25 +74,26 @@ pipeline
 		
 				echo "DEPLOYMENT STARTED"
 
-        			sh "docker-compose down"
+        		sh "docker-compose down"
 				sh "docker-compose up -d"
 				
-				sh "docker build -f Tests/TestCafeDockerfile -t testcafe-image ."
-				sh "docker run --rm -e HTTP_ENV=http://128.140.9.68:81 -v /var/lib/jenkins/workspace/AvengersWEB/Tests:/Tests testcafe-image"
+				dir("PlaywrightTests")
+				{
+				    sh "export URL=http://128.140.9.68:81 && dotnet test --test-adapter-path:. --logger:\"nunit;LogFilePath=TestResults/report.xml\""
+				}
 
 				echo "DEPLOYMENT COMPLETED"
 
     			}
-			/* i give up
     			post 
 			{
         			success 
 				{
             			
-            				junit keepLongStdio: true, testResults: 'Tests/report.xml', skipPublishingChecks: true
-            				archiveArtifacts 'Tests/report.xml'
+            				junit keepLongStdio: true, testResults: "PlaywrightTests/TestResults/report.xml", skipPublishingChecks: true
+            				archiveArtifacts "PlaywrightTests/TestResults/report.xml"
         			}
-    			}*/
+    			}
 		}
 	}
 }
